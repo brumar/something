@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+</head>
+<body style="height:1000px;font-family:monospace;" onmousedown="mouseDown()" onmouseup="mouseUp()" ontouchstart="mouseDown()" ontouchend="mouseUp()">
+
+    <p id="myP">
+    </p>
+    <button onclick="finish()">stop</button>
+    <p id="result">
+    </p>
+    <p id="cookies">
+    </p>
+<script>
+
+var started = false;
+var previous;
+var elapsed;
+var stoptracking = false;
+var alreadysaved = false;
+
+function setCookie(cname, cvalue, exdays) {
+  var d = new Date();
+  d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+  var expires = "expires="+d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function getCookie(cname) {
+  var name = cname + "=";
+  var ca = document.cookie.split(';');
+  for(var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+function checkCookie() {
+  var user = getCookie("username");
+  if (user != "") {
+    alert("Welcome again " + user);
+  } else {
+    user = prompt("Please enter your name:", "");
+    if (user != "" && user != null) {
+      setCookie("username", user, 365);
+    }
+  }
+}
+
+function finish(){
+    stoptracking = true;
+    now = Date.now()
+    delta = now - initial_time;
+    elapsed = Math.floor(delta / 1000)
+    document.getElementById("result").innerHTML = `seconds elapsed = ${elapsed} </br><button onclick="save()">save</button></br><button onclick="location.reload(true)">reload</button></br><button onclick="deleteall()">reset</button>`;
+}
+
+function save(){
+    if (alreadysaved == true){
+        return
+    }
+    var today = new Date();
+    var current = getCookie("MEDITATION")
+    var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear()
+    setCookie("MEDITATION", current + "X"+date +","+elapsed+","+document.getElementById("myP").innerText, 365)+",";
+    document.getElementById("cookies").innerHTML = getCookie("MEDITATION").replace(/X/g,"</br>");
+    alreadysaved = true;
+}
+
+function deleteall(){
+    setCookie("MEDITATION", "");
+    document.getElementById("cookies").innerHTML = ""
+}
+
+
+function mouseDown() {
+    if (stoptracking == true){
+        return
+    }
+    nbdots = 1
+    if(started == true){
+        delta = Date.now() - previous;
+        previous = Date.now();
+        nbdots = Math.max(Math.floor(delta / 1000),1);
+    }
+    else{
+    started = true;
+    previous = Date.now();
+    initial_time = Date.now();
+    
+    }
+    
+  document.getElementById("myP").innerHTML = document.getElementById("myP").innerHTML + "_".repeat(nbdots);
+}
+
+function mouseUp() {
+    if (stoptracking == true){
+        return
+    }
+        delta = Date.now() - previous;
+        previous = Date.now();
+        nbdots = Math.max(Math.floor(delta / 1000),1);
+  document.getElementById("myP").innerHTML = document.getElementById("myP").innerHTML + "—".repeat(nbdots);
+}
+</script>
+
+</body>
+</html>
