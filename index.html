@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="UTF-8">
 </head>
-<body style="user-select:none;">
+<body>
     <p style="font-family:monospace" id="myP">
     </p>
 <div style="height:90vh;background:#00ffff38;width:100%;" ontouchmove="touchmove()" onmousedown="mouseDown()" onmouseup="mouseUp()" ontouchstart="mouseDown()" ontouchend="mouseUp()" ontouchcancel="mouseUp()">
@@ -16,6 +16,18 @@
     <p id="cookies">
     </p>
 </div>
+<style>
+body {
+    -webkit-touch-callout:none;
+    -webkit-user-select:none;
+    -khtml-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+</style>
+
 <script>
 
 var started = false;
