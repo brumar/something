@@ -4,15 +4,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="UTF-8">
 </head>
-<body style="height:1000px;font-family:monospace;" ontouchmove="touchmove()" onmousedown="mouseDown()" onmouseup="mouseUp()" ontouchstart="mouseDown()" ontouchend="mouseUp()" ontouchcancel="mouseUp()">
-
+<body>
+<div style="height:500px;background:grey;width:100%;font-family:monospace;" ontouchmove="touchmove()" onmousedown="mouseDown()" onmouseup="mouseUp()" ontouchstart="mouseDown()" ontouchend="mouseUp()" ontouchcancel="mouseUp()">
     <p id="myP">
     </p>
+</div>
+<div>
     <button onclick="finish()">stop</button>
     <p id="result">
     </p>
     <p id="cookies">
     </p>
+</div>
 <script>
 
 var started = false;
@@ -91,17 +94,16 @@ function mouseDown() {
     if (stoptracking == true){
         return
     }
-    nbdots = 1
+    nbdots = 0
     if(started == true){
         delta = Date.now() - previous;
         previous = Date.now();
-        nbdots = Math.max(Math.floor(delta / 1000),1);
+        nbdots = Math.floor(delta / 1000);
     }
     else{
-    started = true;
-    previous = Date.now();
-    initial_time = Date.now();
-    
+        started = true;
+        previous = Date.now();
+        initial_time = Date.now();
     }
     
   document.getElementById("myP").innerHTML = document.getElementById("myP").innerHTML + "_".repeat(nbdots);
@@ -113,7 +115,7 @@ function mouseUp() {
     }
         delta = Date.now() - previous;
         previous = Date.now();
-        nbdots = Math.max(Math.floor(delta / 1000),1);
+        nbdots = Math.floor(delta / 1000);
   document.getElementById("myP").innerHTML = document.getElementById("myP").innerHTML + "—".repeat(nbdots);
 }
 </script>
