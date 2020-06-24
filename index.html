@@ -5,9 +5,9 @@
   <meta charset="UTF-8">
 </head>
 <body>
-<div style="height:500px;background:grey;width:100%;font-family:monospace;" ontouchmove="touchmove()" onmousedown="mouseDown()" onmouseup="mouseUp()" ontouchstart="mouseDown()" ontouchend="mouseUp()" ontouchcancel="mouseUp()">
-    <p id="myP">
+    <p style="font-family:monospace" id="myP">
     </p>
+<div style="height:90vh;background:#00ffff38;width:100%;" ontouchmove="touchmove()" onmousedown="mouseDown()" onmouseup="mouseUp()" ontouchstart="mouseDown()" ontouchend="mouseUp()" ontouchcancel="mouseUp()">
 </div>
 <div>
     <button onclick="finish()">stop</button>
@@ -107,6 +107,7 @@ function mouseDown() {
     }
     
   document.getElementById("myP").innerHTML = document.getElementById("myP").innerHTML + "_".repeat(nbdots);
+    return false;
 }
 
 function mouseUp() {
